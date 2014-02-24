@@ -20,6 +20,6 @@ Details:
 
 * Deployment instructions (Assuming you have Ruby on Rails installed)
   
-  $ rails server
+  - $ rails server
 
-  Go to: http://localhost:3000
+  - Go to: http://localhost:3000
