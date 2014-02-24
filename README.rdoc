@@ -20,4 +20,3 @@ Per order basis
 * Deployment instructions (Assuming you have Ruby on Rails installed)
 $ rails server
 Go to: http://localhost:3000
-<tt>rake doc:app</tt>.
