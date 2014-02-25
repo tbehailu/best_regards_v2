@@ -6,27 +6,121 @@
 <!--[if gt IE 9]><!--> <html class="no-js" lang="en" itemscope itemtype="http://schema.org/Product"> <!--<![endif]-->
 <head>
 
-<!-- Meta tags & title /-->
-<meta charset="utf-8">
-<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-<title>BestRegards</title>
-<meta name="description" content="." />
-<meta name="keywords" content="" />
-<meta name="author" content="humans.txt">
+  <!-- Meta tags & title /-->
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <title>BestRegards</title>
+  <meta name="description" content="." />
+  <meta name="keywords" content="" />
+  <meta name="author" content="humans.txt">
 
-<!-- Favicon /-->
-<link rel="shortcut icon" href="favicon.png" type="image/x-icon" /> <!-- Favicon /-->
+  <!-- Favicon /-->
+  <link rel="shortcut icon" href="favicon.png" type="image/x-icon" /> <!-- Favicon /-->
 
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
 
-<!-- Stylesheets /-->
-<link rel="stylesheet" href="css/gumby.css">   <!-- Gumby Framework /-->
-<link rel="stylesheet" href="css/style.css">   <!-- Main stylesheet /-->
-<link rel="stylesheet" href="css/component.css"> <!-- Flexslider - Thumbs Icon /-->
+  <!-- Stylesheets /-->
+  <link rel="stylesheet" href="css/gumby.css">   <!-- Gumby Framework /-->
+  <link rel="stylesheet" href="css/style.css">   <!-- Main stylesheet /-->
+  <link rel="stylesheet" href="css/component.css"> <!-- Flexslider - Thumbs Icon /-->
+  <link rel="stylesheet" href="css/jquery.fileupload.css">
 
+  
+  <script src="js/modernizr-2.6.2.min.js"></script>  <!-- Modernizr /-->
 
-<script src="js/modernizr-2.6.2.min.js"></script>  <!-- Modernizr /-->
+    </script>
+  <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+  <script type='text/javascript' src='https://cdn.firebase.com/v0/firebase.js'></script>
 
+<script>
+$(document).ready(function() {
+    console.log("Ready for Input!");
+    var listRef = new Firebase('https://bestregards.firebaseio.com/');
+    $("#next").click(function(){
+    var fname = $("#fname").val();
+    var lname = $("#lname").val();
+    var email = $("#email").val();
+    var addr = $("#addr").val();
+    var addr2 = $("#addr2").val();
+    var city = $("#city").val();
+    var state = $("#state").val();
+    var zip = $("#zip").val();
+    var name = fname + " " + lname
+    listRef.child(name).set({fname: fname, lname: lname, email: email, addr: addr, addr2: addr2, city: city, state: state, zip: zip});
+    $("#confirm").empty().append("Contact Information Saved!");
+    });
+});
+
+</script>
+<script>
+
+var lines = []; 
+
+// Thanks to: http://mounirmesselmeni.github.io/2012/11/20/javascript-csv/
+function handleFiles(files) {
+    // Check for the various File API support.
+    if (window.FileReader) {
+        // FileReader are supported.
+        getAsText(files[0]);
+    } else {
+        alert('FileReader are not supported in this browser.');
+    }
+  }
+
+  function getAsText(fileToRead) {
+    var reader = new FileReader();
+    // Read file into memory as UTF-8      
+    reader.readAsText(fileToRead);
+    // Handle errors load
+    reader.onload = loadHandler;
+    reader.onerror = errorHandler;
+  }
+
+  function loadHandler(event) {
+    var csv = event.target.result;
+    processData(csv);
+  }
+
+  function processData(csv) {
+      var allTextLines = csv.split(/[\r\n|\n]/);
+      for (var i=0; i<allTextLines.length; i++) {
+        if(i == 0) continue; 
+
+          var data = allTextLines[i].split(',');
+              var tarr = [];
+              for (var j=0; j<data.length; j++) {
+                  tarr.push(data[j]);
+              }
+              lines.push(tarr);
+      }
+
+      $.ajax("/PostToMailLift.php", { 
+        type: "POST", 
+        data: {
+            SenderName1:    $("#fname").val() + ' ' + $("#lname").val(),
+            SenderAddress1: $("#addr").val(),
+            SenderAddress2: $("#addr2").val(), 
+            SenderCity:     $("#city").val(),
+            SenderState:    $("#state").val(),
+            SenderZip:      $("#zip").val(), 
+            Recipients:     lines
+        }, 
+        success: function() { 
+            alert("All done, now get back to honeymooning!"); 
+        }, 
+        error: function() { 
+            alert("There was a problem..."); 
+        }
+      });
+  }
+
+  function errorHandler(evt) {
+    if(evt.target.error.name == "NotReadableError") {
+        alert("Canno't read file !");
+    }
+  }
+</script>
+  
 </head>
 
 
@@ -35,48 +129,48 @@
 <!-- NAVIGATION ############################################### -->
 
 
-<!-- Mobile Menu -->
+        <!-- Mobile Menu --> 
 
-<div class="mobile-menu">
-<section id="collapse">
-<div class="row">
-<div class="mobile-menu-inner">
-<ul class="nav-mobile">
+        <div class="mobile-menu">
+            <section id="collapse">
+                <div class="row">
+                    <div class="mobile-menu-inner">
+                        <ul class="nav-mobile">
 
-<li><a href="#">About</a></li>
+                         <li><a href="#">About</a></li>
 
-<li><a href="#">Support</a></li>
+                         <li><a href="#">Support</a></li>
 
-<li><a href="#">Contact</a></li>
+                         <li><a href="#">Contact</a></li>
 
-</ul>
-</div>
-</div>
-</section>
-<a href="#" id="collapse-menu"><img src="img/menu.png" alt="MENU ICON"></a>
-</div>
-
-
-<!--  Menu -->
+                        </ul>
+                    </div>
+                </div>
+            </section>
+            <a href="#" id="collapse-menu"><img src="img/menu.png" alt="MENU ICON"></a>
+        </div>
 
 
-<div class="cbp-af-header">
+        <!--  Menu --> 
 
-<nav class="row">
-<div id="logo"><a href="#"><img alt="YOURLOGO" src="img/logotop.png"></a></div>
 
-<ul id="nav">
+        <div class="cbp-af-header">
 
-<li><a href="#">Contact</a></li>
+            <nav class="row">
+                 <div id="logo"><a href="#"><img alt="YOURLOGO" src="img/logotop.png"></a></div>
 
-<li><a href="#">Support</a></li>
+                 <ul id="nav">
 
-<li><a href="#cbp-so-scroller">About</a></li>
-</ul>
+                     <li><a href="#">Contact</a></li>
 
-</nav>
+                     <li><a href="#">Support</a></li>
 
-</div>
+                     <li><a href="#cbp-so-scroller">About</a></li>
+                 </ul>
+
+            </nav>
+
+        </div> 
 
 
 <!-- END NAVIGATION ############################################### -->
@@ -87,15 +181,15 @@
 
 <section>
 
-<div class="row text-right social-stuff">
+    <div class="row text-right social-stuff">
 
-<!--  Facebook Share Button-->
-
-
-<!-- PUT HERE YOUR GENERATE CODE OF FACEBOOK BUTTON : developers.facebook.com/docs/reference/plugins/like/ -->
+        <!--  Facebook Share Button--> 
 
 
-<!-- Twitter Share Button -->
+        <!-- PUT HERE YOUR GENERATE CODE OF FACEBOOK BUTTON : developers.facebook.com/docs/reference/plugins/like/ -->
+
+
+        <!-- Twitter Share Button --> 
 
 <a href="https://twitter.com/share" class="twitter-share-button">Tweet</a>
 <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>
@@ -109,7 +203,7 @@
 
 <!-- END HEADER ############################################### -->
 
-<!-- BEGIN CONTAINER ############################################### -->
+<!-- BEGIN CONTAINER ############################################### --
 
 
 <div id="container" class="container">
@@ -120,211 +214,289 @@
 <!-- SECTION THUMBS ############################################### -->
 
 
-<section class="cbp-so-section thumbs">
+<section align="center" class="cbp-so-section thumbs"> 
+    <div class="row">
+       <div class="twelve columns centered">
+          <h3>Estimated Time Savings</h3>
+          <div class="hi-icon-wrap hi-icon-effect-9 hi-icon-effect-9b">
+             How many cards do you have to write? <br>
+             <input type="text" name="cards" id="cards"> cards
+             <p id="hours"></p>
+             <br>
+             <p id="actual">Spend only <b>15 minutes</b> with <b>Best Regards</b>!</p>
+             <br>
+             <br>
+             <p>
+             <form action="" method="POST"  class="field">
+                <script>
+                   $(document).ready(function() {
+                    console.log("Ready for Input!");
+                    $("#cards").keyup(function(){
+                        var cardcount = isPositiveInteger($("#cards").val()*7) ;
+                        function isPositiveInteger(input) {
+                            if(input) {
+                           var out = +input;
+                           if (input < 0) input = Math.abs(input);
+                           if (input != ~~input) input = parseInt(input, 10);
+                           if (input >= 60 && input < 4000) {
+                             min = input % 60;
+                             hour = Math.floor(input/60);
+                             $("#hours").empty().append("Thats over ").append(hour).append(" hours ").append(min).append(" minutes").append(" writing cards!");
+                           }
+                           if (input > 15 && input/7 <= 25) { 
+                           var timesaved = (input) - 15;
+                           var h = Math.floor(timesaved/60);
+                           var m = timesaved%60;
+                             if (h > 0 ) {
+                                 $("#hours").empty().append("You will save ").append(h).append(" hours ").append(m).append(" minutes using <b>Best Regards</b>")};
+                             if (h <= 0){ $("#hours").empty().append("You will save ").append(m).append(" minutes").append(" using <b>Best Regards</b>");}
+                           }
+                           if (input <= 15 ||(input > 25 && input < 60)) { $("#hours").empty().append("You will spend ").append(input).append(" minutes").append(" writing cards."); }
+                           if (input >= 4000) {
+                             $("#hours").empty().append("To write ").append(input/7).append(" cards ").append(" please email us").append("<a href=\"mailto:me@krishna.im?Subject=We%20need%20a%20bunch%20of%20cards%20\"> here!</a>")};
 
-<div class="row">
+                         }
+                         else { $("#hours").empty().append("You see that field above? If you put a number (i.e., \"40\") I can tell you how much time you save with <b>Best Regards</b>"); }
+                        }
+                     });
+                       $("#cards").keydown(function(){ $("#hours").empty() });
+                   });
+                </script>
+             </form>
+             </p>
+          </div>
+       </div>
+    </div>
 
-<div class="twelve columns centered">
+    <div class="row">
 
-<h3>Order</h3>
+        <div class="twelve columns centered">
 
-<p class="lead">
-<br> Download the CSV Template
-<br> Complete with Contacts
-<br> Save File as .csv
-<br> Upload File
-<br> <a href="https://www.dropbox.com/s/b7rxekciik4txmb/CSV_Template.xlsx"> Template </a>
+                             <h3>Order</h3>
 
-</p>
+            <div class="hi-icon-wrap hi-icon-effect-9 hi-icon-effect-9b">
 
-<div class="hi-icon-wrap hi-icon-effect-9 hi-icon-effect-9b">
+            <div class="field">
+            <ul class="field">
+                <div class="picker">
+                    <select>
+                        <option value="#" disabled>Confirm Your Card Style</option>
+                        <option>Simple</option>
+                        <option>Classic</option>
+                        <option>Elegant</option>
+                     </select>
+                 </div>                          
+            </ul>
+                <form action="" method="POST"  class="field">
+                    <p><input class="input" type="text" name="fname" id="fname" placeholder="First Name" /></p>
+                    <p><input class="input" type="text" name="lname" id="lname" placeholder="Last Name" /></p>
+                    <p><input class="input" type="text" name="email" id="email" placeholder="Email" /></p>
+                    <p><input class="input" type="text" name="addr" id="addr" placeholder="Address" /></p>
+                    <p><input class="input" type="text" name="addr2" id="addr2" placeholder="Address Line 2" /></p>
+                    <p><input class="input" type="text" name="city" id="city" placeholder="City" /></p>
+                    <p><input class="input" type="text" name="state" id="state" placeholder="State" /></p>
+                    <p><input class="input" type="text" name="zip" id="zip" placeholder="Zip" /></p>
+                    <br>
+                    <button type="button" id="next">Save</button>
+                    <p id="confirm"></p>
 
-<div class="field">
-<input class="input" type="text" placeholder="Full Name" />
-<input class="input" type="text" placeholder="Email" />
-</div>
+                <p>
+
+                </p>
+                </div>
+
+                    <p class="lead"> 
+                    <br> Download the CSV <a href="https://www.dropbox.com/s/b7rxekciik4txmb/CSV_Template.xlsx"><u><FONT COLOR = "#C0C0C0">Template</u></FONT></a>
+                    <br> Complete with Contacts
+                    <br> Save File as .csv 
+                    <br> Upload File
+                    </p>            
+
+                   </div>
+            
+            
+            </div>          
+
+        </div>
+
+    </div>
 
 
-<p>
+        <!-- CSS to style the file input field as button and adjust the Bootstrap progress bars -->
 
+        <span class="btn btn-success fileinput-button">
+            <i class="glyphicon glyphicon-plus"></i>
+            <!-- The file input field used as target for the file upload widget -->
+            <input id="fileupload" type="file" name="files[]" onchange="handleFiles(this.files)" />
+        </span>
 
-<li class="field">
-<div class="picker">
-<select>
-<option value="#" disabled>Card Layout…</option>
-<option>Simple</option>
-<option>Classic</option>
-<option>Elegant</option>
-</select>
-</div>
-</li>
+        <!-- Order Checkout Section -->
+        <!-- 
+          <script
+            src="https://checkout.stripe.com/v2/checkout.js" class="stripe-button"
+            data-key="pk_test_5AryWoQVyeu32dmGgV0CW9qd"
+            data-amount="10000"
+            data-name="Best Regards"
+            data-description="Cards ($100.00)"
+            data-image="/128x128.png">
+          </script>
+          -->
 
-</ul>
+        <%= form_tag charges_path do %>
+            <article>
+                <label class="amount">
+                    <span>Amount: $1.00</span>
+                </label>
+            </article>
 
-</div>
+        <script src="https://checkout.stripe.com/checkout.js" class="stripe-button"
+            data-key="<%= Rails.configuration.stripe[:publishable_key] %>"
+            data-description="A month's subscription"
+            data-amount="100"></script>
+        <% end %>
 
-</div>
-
-</div>
-
-
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<!-- Bootstrap styles -->
-<link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css">
-<!-- Generic page styles -->
-<link rel="stylesheet" href="css/style.css">
-<!-- CSS to style the file input field as button and adjust the Bootstrap progress bars -->
-<link rel="stylesheet" href="css/jquery.fileupload.css">
-
-<span class="btn btn-success fileinput-button">
-<i class="glyphicon glyphicon-plus"></i>
-<span>Add files...</span>
-<!-- The file input field used as target for the file upload widget -->
-<input id="fileupload" type="file" name="files[]" multiple>
-</span>
-<br>
-<br>
-<!-- The global progress bar -->
-<div id="progress" class="progress">
-<div class="progress-bar progress-bar-success"></div>
-</div>
-<!-- The container for the uploaded files -->
-<div id="files" class="files"></div>
-<br>
-<li>The maximum file size for uploads in this demo is <strong>5 MB</strong> (default file size is unlimited).</li>
-<li>You can <strong>drag &amp; drop</strong> files from your desktop on this webpage</li>
-</ul>
-</div>
-</div>
-</div>
-<script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
-<!-- The jQuery UI widget factory, can be omitted if jQuery UI is already included -->
-<script src="js/vendor/jquery.ui.widget.js"></script>
-<!-- The Load Image plugin is included for the preview images and image resizing functionality -->
-<script src="http://blueimp.github.io/JavaScript-Load-Image/js/load-image.min.js"></script>
-<!-- The Canvas to Blob plugin is included for image resizing functionality -->
-<script src="http://blueimp.github.io/JavaScript-Canvas-to-Blob/js/canvas-to-blob.min.js"></script>
-<!-- Bootstrap JS is not required, but included for the responsive demo navigation -->
-<script src="//netdna.bootstrapcdn.com/bootstrap/3.0.0/js/bootstrap.min.js"></script>
-<!-- The Iframe Transport is required for browsers without support for XHR file uploads -->
-<script src="js/jquery.iframe-transport.js"></script>
-<!-- The basic File Upload plugin -->
-<script src="js/jquery.fileupload.js"></script>
-<!-- The File Upload processing plugin -->
-<script src="js/jquery.fileupload-process.js"></script>
-<!-- The File Upload image preview & resize plugin -->
-<script src="js/jquery.fileupload-image.js"></script>
-<!-- The File Upload audio preview plugin -->
-<script src="js/jquery.fileupload-audio.js"></script>
-<!-- The File Upload video preview plugin -->
-<script src="js/jquery.fileupload-video.js"></script>
-<!-- The File Upload validation plugin -->
-<script src="js/jquery.fileupload-validate.js"></script>
-<script>
-/*jslint unparam: true, regexp: true */
-/*global window, $ */
-$(function () {
-    'use strict';
-    // Change this to the location of your server-side upload handler:
-    var url = window.location.hostname === 'blueimp.github.io' ?
-    '//jquery-file-upload.appspot.com/' : 'server/php/',
-    uploadButton = $('<button/>')
-    .addClass('btn btn-primary')
-    .prop('disabled', true)
-    .text('Processing...')
-    .on('click', function () {
-        var $this = $(this),
-        data = $this.data();
-        $this
-        .off('click')
-        .text('Abort')
-        .on('click', function () {
-            $this.remove();
-            data.abort();
-        });
-        data.submit().always(function () {
-            $this.remove();
-        });
-    });
-    $('#fileupload').fileupload({
-        url: url,
-        dataType: 'json',
-        autoUpload: false,
-        acceptFileTypes: /(\.|\/)(gif|jpe?g|png)$/i,
-        maxFileSize: 5000000, // 5 MB
-        // Enable image resizing, except for Android and Opera,
-        // which actually support image resizing, but fail to
-        // send Blob objects via XHR requests:
-        disableImageResize: /Android(?!.*Chrome)|Opera/
-        .test(window.navigator.userAgent),
-        previewMaxWidth: 100,
-        previewMaxHeight: 100,
-        previewCrop: true
-    }).on('fileuploadadd', function (e, data) {
-        data.context = $('<div/>').appendTo('#files');
-        $.each(data.files, function (index, file) {
-            var node = $('<p/>')
-            .append($('<span/>').text(file.name));
-            if (!index) {
+    </form>
+        <br>
+        <br>
+        <!-- The global progress bar -->
+        <div id="progress" class="progress">
+            <div class="progress-bar progress-bar-success"></div>
+        </div>
+        <!-- The container for the uploaded files -->
+        <div id="files" class="files"></div>
+        <br>                
+                      </ul>
+            </div>
+        </div>
+        </div>
+        <script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+        <!-- The jQuery UI widget factory, can be omitted if jQuery UI is already included -->
+        <script src="js/vendor/jquery.ui.widget.js"></script>
+        <!-- The Load Image plugin is included for the preview images and image resizing functionality -->
+        <script src="http://blueimp.github.io/JavaScript-Load-Image/js/load-image.min.js"></script>
+        <!-- The Canvas to Blob plugin is included for image resizing functionality -->
+        <script src="http://blueimp.github.io/JavaScript-Canvas-to-Blob/js/canvas-to-blob.min.js"></script>
+        <!-- Bootstrap JS is not required, but included for the responsive demo navigation -->
+        <script src="//netdna.bootstrapcdn.com/bootstrap/3.0.0/js/bootstrap.min.js"></script>
+        <!-- The Iframe Transport is required for browsers without support for XHR file uploads -->
+        <script src="js/jquery.iframe-transport.js"></script>
+        <!-- The basic File Upload plugin -->
+        <script src="js/jquery.fileupload.js"></script>
+        <!-- The File Upload processing plugin -->
+        <script src="js/jquery.fileupload-process.js"></script>
+        <!-- The File Upload image preview & resize plugin -->
+        <script src="js/jquery.fileupload-image.js"></script>
+        <!-- The File Upload audio preview plugin -->
+        <script src="js/jquery.fileupload-audio.js"></script>
+        <!-- The File Upload video preview plugin -->
+        <script src="js/jquery.fileupload-video.js"></script>
+        <!-- The File Upload validation plugin -->
+        <script src="js/jquery.fileupload-validate.js"></script>
+        <script>
+        /*jslint unparam: true, regexp: true */
+        /*global window, $ */
+        $(function () {
+        'use strict';
+        // Change this to the location of your server-side upload handler:
+        var url = window.location.hostname === 'blueimp.github.io' ?
+                    '//jquery-file-upload.appspot.com/' : 'server/php/',
+            uploadButton = $('<button/>')
+                .addClass('btn btn-primary')
+                .prop('disabled', true)
+                .text('Processing...')
+                .on('click', function () {
+                    var $this = $(this),
+                        data = $this.data();
+                    $this
+                        .off('click')
+                        .text('Abort')
+                        .on('click', function () {
+                            $this.remove();
+                            data.abort();
+                        });
+                    data.submit().always(function () {
+                        $this.remove();
+                    });
+                });
+        $('#fileupload').fileupload({
+            url: url,
+            dataType: 'json',
+            autoUpload: false,
+            acceptFileTypes: /(\.|\/)(gif|csv|jpe?g|png)$/i,
+            maxFileSize: 5000000, // 5 MB
+            // Enable image resizing, except for Android and Opera,
+            // which actually support image resizing, but fail to
+            // send Blob objects via XHR requests:
+            disableImageResize: /Android(?!.*Chrome)|Opera/
+                .test(window.navigator.userAgent),
+            previewMaxWidth: 100,
+            previewMaxHeight: 100,
+            previewCrop: true
+        }).on('fileuploadadd', function (e, data) {
+            data.context = $('<div/>').appendTo('#files');
+            $.each(data.files, function (index, file) {
+                var node = $('<p/>')
+                        .append($('<span/>').text(file.name));
+                if (!index) {
+                    node
+                        .append('<br>')
+                        .append(uploadButton.clone(true).data(data));
+                }
+                node.appendTo(data.context);
+            });
+        }).on('fileuploadprocessalways', function (e, data) {
+            var index = data.index,
+                file = data.files[index],
+                node = $(data.context.children()[index]);
+            if (file.preview) {
                 node
-                .append('<br>')
-                .append(uploadButton.clone(true).data(data));
+                    .prepend('<br>')
+                    .prepend(file.preview);
             }
-            node.appendTo(data.context);
-        });
-    }).on('fileuploadprocessalways', function (e, data) {
-        var index = data.index,
-        file = data.files[index],
-        node = $(data.context.children()[index]);
-        if (file.preview) {
-            node
-            .prepend('<br>')
-            .prepend(file.preview);
-        }
-        if (file.error) {
-            node
-            .append('<br>')
-            .append($('<span class="text-danger"/>').text(file.error));
-        }
-        if (index + 1 === data.files.length) {
-            data.context.find('button')
-            .text('Upload')
-            .prop('disabled', !!data.files.error);
-        }
-    }).on('fileuploadprogressall', function (e, data) {
-        var progress = parseInt(data.loaded / data.total * 100, 10);
-        $('#progress .progress-bar').css(
-        'width',
-        progress + '%'
-        );
-    }).on('fileuploaddone', function (e, data) {
-        $.each(data.result.files, function (index, file) {
-            if (file.url) {
-                var link = $('<a>')
-                .attr('target', '_blank')
-                .prop('href', file.url);
-                $(data.context.children()[index])
-                .wrap(link);
-            } else if (file.error) {
-                var error = $('<span class="text-danger"/>').text(file.error);
-                $(data.context.children()[index])
-                .append('<br>')
-                .append(error);
+            if (file.error) {
+                node
+                    .append('<br>')
+                    .append($('<span class="text-danger"/>').text(file.error));
             }
+            if (index + 1 === data.files.length) {
+                data.context.find('button')
+                    .text('Upload')
+                    .prop('disabled', !!data.files.error);
+            }
+        }).on('fileuploadprogressall', function (e, data) {
+            var progress = parseInt(data.loaded / data.total * 100, 10);
+            $('#progress .progress-bar').css(
+                'width',
+                progress + '%'
+            );
+        }).on('fileuploaddone', function (e, data) {
+            $.each(data.result.files, function (index, file) {
+                if (file.url) {
+                    var link = $('<a>')
+                        .attr('target', '_blank')
+                        .prop('href', file.url);
+                    $(data.context.children()[index])
+                        .wrap(link);
+                } else if (file.error) {
+                    var error = $('<span class="text-danger"/>').text(file.error);
+                    $(data.context.children()[index])
+                        .append('<br>')
+                        .append(error);
+                }
+            });
+        }).on('fileuploadfail', function (e, data) {
+            $.each(data.files, function (index, file) {
+                var error = $('<span class="text-danger"/>').text('File upload failed.');
+                $(data.context.children()[index])
+                    .append('<br>')
+                    .append(error);
+            });
+        }).prop('disabled', !$.support.fileInput)
+            .parent().addClass($.support.fileInput ? undefined : 'disabled');
         });
-    }).on('fileuploadfail', function (e, data) {
-        $.each(data.files, function (index, file) {
-            var error = $('<span class="text-danger"/>').text('File upload failed.');
-            $(data.context.children()[index])
-            .append('<br>')
-            .append(error);
-        });
-    }).prop('disabled', !$.support.fileInput)
-    .parent().addClass($.support.fileInput ? undefined : 'disabled');
-});
-</script>
+        </script>       
 
-</section>
+        </section>
 
 <!-- END SECTION THUMBS ############################################### -->
 
@@ -337,34 +509,32 @@ $(function () {
 
 <section id="footer">
 
-<div class="row">
+    <div class="row">
 
-<!-- Text from left -->
+        <!-- Text from left -->
 
-<div class="seven columns pull_left">
+        <div class="seven columns pull_left">
 
-<p>© 2013 Best Regards<br>Made with <img src="img/withlove.png" alt="With Love"> at <a href="http://angelhack.com">angelhack</a></p>
+            <p>© 2013 Best Regards<br>Made with <img src="img/withlove.png" alt="With Love"> at <a href="http://angelhack.com">angelhack</a></p>
 
-</div>
+        </div>
 
-<!-- Footer Navigation -->
+        <!-- Footer Navigation -->
 
-<div class="five columns text-right social">
+        <div class="five columns text-right social">
 
 
-<ul id="navfirst">
+                 <ul id="navfirst">
 
-<li><a href="#">Unsubscribe</a></li>
+                     <li><a href="#">Privacy</a></li>
 
-<li><a href="#">Privacy</a></li>
+                     <li><a href="#">Support</a></li>
 
-<li><a href="#">Support</a></li>
+                 </ul>
+            
+        </div>
 
-</ul>
-
-</div>
-
-</div>
+    </div>
 
 </section>
 
@@ -375,26 +545,26 @@ $(function () {
 </div> <!-- end of container -->
 
 
-<!-- Grab Google CDN's jQuery, fall back to local if offline -->
-<script src="//ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
-<script>window.jQuery || document.write('<script src="js/jquery-1.9.1.min.js"><\/script>')</script>
-<script src="js/main.js" type="text/javascript"></script> <!-- Main Javascript File -->
-<script src="js/plugins.js" type="text/javascript"></script> <!--Plugins File -->
-<script src="js/cbpScroller.js" type="text/javascript"></script> <!-- Scroll from left & right -->
-<script src="js/classie.js" type="text/javascript"></script> <!-- Scroll from left & right -->
-<script src="js/jquery.scrollto.js" type="text/javascript"></script> <!-- ScrollTo for Button -->
-<script src="js/jquery.parallax-1.1.3.js" type="text/javascript"></script> <!-- Parallax -->
-<script src="js/jquery.flexslider.js" type="text/javascript"></script> <!-- FlexSlider -->
+  <!-- Grab Google CDN's jQuery, fall back to local if offline -->
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+  <script>window.jQuery || document.write('<script src="js/jquery-1.9.1.min.js"><\/script>')</script>
+  <script src="js/main.js" type="text/javascript"></script> <!-- Main Javascript File -->
+  <script src="js/plugins.js" type="text/javascript"></script> <!--Plugins File -->
+  <script src="js/cbpScroller.js" type="text/javascript"></script> <!-- Scroll from left & right -->
+  <script src="js/classie.js" type="text/javascript"></script> <!-- Scroll from left & right -->
+  <script src="js/jquery.scrollto.js" type="text/javascript"></script> <!-- ScrollTo for Button -->
+  <script src="js/jquery.parallax-1.1.3.js" type="text/javascript"></script> <!-- Parallax -->
+  <script src="js/jquery.flexslider.js" type="text/javascript"></script> <!-- FlexSlider -->
 
+  
+  <!-- Change UA-XXXXX-X to be your site's ID -->
+  <!--<script>
+    window._gaq = [['_setAccount','UAXXXXXXXX1'],['_trackPageview'],['_trackPageLoadTime']];
+    Modernizr.load({
+      load: ('https:' == location.protocol ? '//ssl' : '//www') + '.google-analytics.com/ga.js'
+    });
+  </script>  -->
 
-<!-- Change UA-XXXXX-X to be your site's ID -->
-<!--<script>
-window._gaq = [['_setAccount','UAXXXXXXXX1'],['_trackPageview'],['_trackPageLoadTime']];
-Modernizr.load({
-    load: ('https:' == location.protocol ? '//ssl' : '//www') + '.google-analytics.com/ga.js'
-});
-</script>  -->
-
-</body>
-
+  </body>
+  
 </html>

@@ -4,6 +4,7 @@ Blog::Application.routes.draw do
   # See how all your routes lay out with "rake routes".
 
   resources :orders
+  resources :charges
   get 'layout' => 'static#layout'
   get 'order' => 'static#order'
 
