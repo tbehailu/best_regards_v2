@@ -39,19 +39,21 @@
       <div class="hi-icon-wrap hi-icon-effect-9 hi-icon-effect-9b">
         <ul class="three_up tiles centered hi-icon-effect-9 hi-icon-effect-9b">
           <li>
-            <a href="layout.html" class="hi-icon hi-icon-images">Images</a>
+            <%= link_to "Images", templates_path, class: "hi-icon hi-icon-images" %>
+<!--             <a href="/templates" class="hi-icon hi-icon-images">Images</a> -->
             <div class="clear"></div>
             <h4>Browse the layouts</h4>
             <p>Explore our layouts and select from a variety of letter templates.</p>
           </li>
           <li>
-            <a href="order.html" class="hi-icon hi-icon-pencil">Edit</a>
+            <a href="/orders/new" class="hi-icon hi-icon-pencil">Edit</a>
             <div class="clear"></div>
             <h4>Place an order</h4>
             <p>Proceed with your order today!</p>
           </li>
           <li>
-            <a href="#set-9" class="hi-icon hi-icon-mail">Mail</a>
+<!--             TODO: Change when we have a reviews page -->
+            <a href="/#set-9" class="hi-icon hi-icon-mail">Reviews</a>
             <div class="clear"></div>
             <h4>Reviews</h4>
             <p> Any comments about our services?

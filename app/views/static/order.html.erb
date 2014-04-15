@@ -3,7 +3,8 @@
 <!--[if IE 7]>    <html class="no-js ie7 oldie" lang="en"> <![endif]-->
 <!--[if IE 8]>    <html class="no-js ie8 oldie" lang="en"> <![endif]-->
 <!--[if IE 9]>    <html class="no-js ie9" lang="en"> <![endif]-->
-<!--[if gt IE 9]><!--> <html class="no-js" lang="en" itemscope itemtype="http://schema.org/Product"> <!--<![endif]-->
+<!--[if gt IE 9]><!-->
+<html class="no-js" lang="en" itemscope itemtype="http://schema.org/Product"> <!--<![endif]-->
 <head>
 
   <!-- Meta tags & title /-->
@@ -26,9 +27,7 @@
   stylesheet_link_tag "jquery.fileupload.css"
 
   javascript_include_tag "modernizr-2.6.2.min.js" <!-- Modernizr /-->
-  <!--  <script src="js/modernizr-2.6.2.min.js"></script>  -->
-
-    </script>
+  
   <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
   <script type='text/javascript' src='https://cdn.firebase.com/v0/firebase.js'></script>
 
@@ -54,7 +53,7 @@ $(document).ready(function() {
 </script>
 <script>
 
-var lines = []; 
+var lines = [];
 
 // Thanks to: http://mounirmesselmeni.github.io/2012/11/20/javascript-csv/
 function handleFiles(files) {
@@ -69,7 +68,7 @@ function handleFiles(files) {
 
   function getAsText(fileToRead) {
     var reader = new FileReader();
-    // Read file into memory as UTF-8      
+    // Read file into memory as UTF-8
     reader.readAsText(fileToRead);
     // Handle errors load
     reader.onload = loadHandler;
@@ -84,7 +83,7 @@ function handleFiles(files) {
   function processData(csv) {
       var allTextLines = csv.split(/[\r\n|\n]/);
       for (var i=0; i<allTextLines.length; i++) {
-        if(i == 0) continue; 
+        if(i == 0) continue;
 
           var data = allTextLines[i].split(',');
               var tarr = [];
@@ -94,22 +93,22 @@ function handleFiles(files) {
               lines.push(tarr);
       }
 
-      $.ajax("/PostToMailLift.php", { 
-        type: "POST", 
+      $.ajax("/PostToMailLift.php", {
+        type: "POST",
         data: {
             SenderName1:    $("#fname").val() + ' ' + $("#lname").val(),
             SenderAddress1: $("#addr").val(),
-            SenderAddress2: $("#addr2").val(), 
+            SenderAddress2: $("#addr2").val(),
             SenderCity:     $("#city").val(),
             SenderState:    $("#state").val(),
-            SenderZip:      $("#zip").val(), 
+            SenderZip:      $("#zip").val(),
             Recipients:     lines
-        }, 
-        success: function() { 
-            alert("All done, now get back to honeymooning!"); 
-        }, 
-        error: function() { 
-            alert("There was a problem..."); 
+        },
+        success: function() {
+            alert("All done, now get back to honeymooning!");
+        },
+        error: function() {
+            alert("There was a problem...");
         }
       });
   }
@@ -120,7 +119,7 @@ function handleFiles(files) {
     }
   }
 </script>
-  
+
 </head>
 
 
@@ -129,20 +128,16 @@ function handleFiles(files) {
 <!-- NAVIGATION ############################################### -->
 
 
-        <!-- Mobile Menu --> 
+        <!-- Mobile Menu -->
 
         <div class="mobile-menu">
             <section id="collapse">
                 <div class="row">
                     <div class="mobile-menu-inner">
                         <ul class="nav-mobile">
-
                          <li><a href="#">About</a></li>
-
                          <li><a href="#">Support</a></li>
-
                          <li><a href="#">Contact</a></li>
-
                         </ul>
                     </div>
                 </div>
@@ -153,28 +148,21 @@ function handleFiles(files) {
         </div>
 
 
-        <!--  Menu --> 
+        <!--  Menu -->
 
 
         <div class="cbp-af-header">
-
             <nav class="row">
                  <div id="logo"><a href="#">
                   <%= image_tag "logotop.png" %>
                 </div>
-
                  <ul id="nav">
-
                      <li><a href="#">Contact</a></li>
-
                      <li><a href="#">Support</a></li>
-
                      <li><a href="#cbp-so-scroller">About</a></li>
                  </ul>
-
             </nav>
-
-        </div> 
+        </div>
 
 
 <!-- END NAVIGATION ############################################### -->
@@ -184,41 +172,24 @@ function handleFiles(files) {
 
 
 <section>
-
     <div class="row text-right social-stuff">
-
-        <!--  Facebook Share Button--> 
-
-
+        <!--  Facebook Share Button-->
         <!-- PUT HERE YOUR GENERATE CODE OF FACEBOOK BUTTON : developers.facebook.com/docs/reference/plugins/like/ -->
-
-
-        <!-- Twitter Share Button --> 
-
-<a href="https://twitter.com/share" class="twitter-share-button">Tweet</a>
-<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>
-
-
-
-
-
+        <!-- Twitter Share Button -->
+<!--         <a href="https://twitter.com/share" class="twitter-share-button">Tweet</a>
+        <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script> -->
 </section>
-
 
 <!-- END HEADER ############################################### -->
 
-<!-- BEGIN CONTAINER ############################################### --
-
-
+<!-- BEGIN CONTAINER ############################################### -->
 <div id="container" class="container">
-
-<div id="cbp-so-scroller" class="cbp-so-scroller"> <!-- HERE IS THE DIV FOR SCROLLING EFFECT -->
-
+  <div id="cbp-so-scroller" class="cbp-so-scroller"> <!-- HERE IS THE DIV FOR SCROLLING EFFECT -->
 
 <!-- SECTION THUMBS ############################################### -->
 
 
-<section align="center" class="cbp-so-section thumbs"> 
+<section align="center" class="cbp-so-section thumbs">
     <div class="row">
        <div class="twelve columns centered">
           <h3>Estimated Time Savings</h3>
@@ -247,7 +218,7 @@ function handleFiles(files) {
                              hour = Math.floor(input/60);
                              $("#hours").empty().append("Thats over ").append(hour).append(" hours ").append(min).append(" minutes").append(" writing cards!");
                            }
-                           if (input > 15 && input/7 <= 25) { 
+                           if (input > 15 && input/7 <= 25) {
                            var timesaved = (input) - 15;
                            var h = Math.floor(timesaved/60);
                            var m = timesaved%60;
@@ -289,7 +260,7 @@ function handleFiles(files) {
                         <option>Classic</option>
                         <option>Elegant</option>
                      </select>
-                 </div>                          
+                 </div>
             </ul>
                 <form action="" method="POST"  class="field">
                     <p><input class="input" type="text" name="fname" id="fname" placeholder="First Name" /></p>
@@ -309,21 +280,21 @@ function handleFiles(files) {
                 </p>
                 </div>
 
-                    <p class="lead"> 
+                    <p class="lead">
                     <br> Download the CSV <a href="https://www.dropbox.com/s/b7rxekciik4txmb/CSV_Template.xlsx"><u><FONT COLOR = "#C0C0C0">Template</u></FONT></a>
                     <br> Complete with Contacts
-                    <br> Save File as .csv 
+                    <br> Save File as .csv
                     <br> Upload File
 
                     <br><br><br>
                     <input id="fileupload" type="file" name="files[]" onchange="handleFiles(this.files)" />
 
-                    </p>            
+                    </p>
 
                    </div>
-            
-            
-            </div>          
+
+
+            </div>
 
         </div>
 
@@ -331,7 +302,7 @@ function handleFiles(files) {
 
 
         <!-- CSS to style the file input field as button and adjust the Bootstrap progress bars -->
-<!-- 
+<!--
         <span class="btn btn-success fileinput-button">
             <i class="glyphicon glyphicon-plus"></i>
             The file input field used as target for the file upload widget
@@ -339,7 +310,7 @@ function handleFiles(files) {
         </span> -->
 
         <!-- Order Checkout Section -->
-        <!-- 
+        <!--
           <script
             src="https://checkout.stripe.com/v2/checkout.js" class="stripe-button"
             data-key="pk_test_5AryWoQVyeu32dmGgV0CW9qd"
@@ -373,7 +344,7 @@ function handleFiles(files) {
         </div>
         <!-- The container for the uploaded files -->
         <div id="files" class="files"></div>
-        <br>                
+        <br>
                       </ul>
             </div>
         </div>
@@ -503,7 +474,7 @@ function handleFiles(files) {
         }).prop('disabled', !$.support.fileInput)
             .parent().addClass($.support.fileInput ? undefined : 'disabled');
         });
-        </script>       
+        </script>
 
         </section>
 
@@ -524,7 +495,7 @@ function handleFiles(files) {
 
         <div class="seven columns pull_left">
 
-            <p>© 2013 Best Regards<br>Made with 
+            <p>© 2013 Best Regards<br>Made with
               <%= image_tag "withlove.png" %>
               at <a href="http://angelhack.com">angelhack</a></p>
 
@@ -542,7 +513,7 @@ function handleFiles(files) {
                      <li><a href="#">Support</a></li>
 
                  </ul>
-            
+
         </div>
 
     </div>
@@ -567,7 +538,7 @@ function handleFiles(files) {
   javascript_include_tag "jquery.parallax-1.1.3.js"
   javascript_include_tag "jquery.flexslider.js"
 
-  
+
   <!-- Change UA-XXXXX-X to be your site's ID -->
   <!--<script>
     window._gaq = [['_setAccount','UAXXXXXXXX1'],['_trackPageview'],['_trackPageLoadTime']];
@@ -577,5 +548,5 @@ function handleFiles(files) {
   </script>  -->
 
   </body>
-  
+
 </html>
