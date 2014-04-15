@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140323213247) do
+ActiveRecord::Schema.define(version: 20140415022712) do
 
   create_table "orders", force: true do |t|
     t.string   "user_name"
@@ -21,6 +21,12 @@ ActiveRecord::Schema.define(version: 20140323213247) do
     t.string   "stripe_data"
     t.datetime "created_at"
     t.datetime "updated_at"
+  end
+
+  create_table "reviews", force: true do |t|
+    t.string   "commenter"
+    t.string   "content"
+    t.datetime "created_at"
   end
 
 end

@@ -5,8 +5,8 @@ class Order < ActiveRecord::Base
 	# data_id = Template Style
 	# stripe_data = data received from stripe
 
-    # validates_presence_of :user_name, :email, :data, :data_type, :stripe_data
-    validate :order_is_valid?
+	# validates_presence_of :user_name, :email, :data, :data_type, :stripe_data
+	validate :order_is_valid?
 
 private
   def order_is_valid?

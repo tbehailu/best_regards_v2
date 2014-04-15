@@ -1,0 +1,38 @@
+<!-- BEGIN CONTAINER ############################################### -->
+
+
+<div id="container" class="container">
+  <div id="cbp-so-scroller" class="cbp-so-scroller"> <!-- HERE IS THE DIV FOR SCROLLING EFFECT -->
+
+
+<!-- SECTION THUMBS ############################################### -->
+
+
+<section align="center" class="cbp-so-section thumbs"> 
+  <div class="row">
+     <div class="twelve columns centered">
+
+      <p>
+        <h3><strong>Reviews</strong></h3>
+
+      </p>
+      <h2>Add a comment:</h2>
+      <%= form_for @review do |f| %>
+      <p>
+        <%= f.label :commenter %><br>
+        <%= f.text_field :commenter %>
+      </p>
+      <p>
+        <%= f.label :content %><br>
+        <%= f.text_area :content %>
+      </p>
+      <p>
+        <%= f.submit %>
+      </p>
+      <% end %>
+
+</div>
+</div>
+</section>
+</div>
+</div>

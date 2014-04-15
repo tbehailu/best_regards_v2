@@ -1,9 +1,11 @@
 Blog::Application.routes.draw do
   get 'orders/thankyou' => 'orders#thankyou'
   resources :orders
+  resources :reviews
   resources :charges
   get 'templates' => 'static#templates'
-  get 'order' => 'static#order'
+  # get 'order' => 'static#order'
+  get 'reviews' => 'reviews#new'
 
   # You can have the root of your site routed with "root"
   root 'welcome#index'
