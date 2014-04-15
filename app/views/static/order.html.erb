@@ -20,13 +20,13 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
 
   <!-- Stylesheets /-->
-  <link rel="stylesheet" href="css/gumby.css">   <!-- Gumby Framework /-->
-  <link rel="stylesheet" href="css/style.css">   <!-- Main stylesheet /-->
-  <link rel="stylesheet" href="css/component.css"> <!-- Flexslider - Thumbs Icon /-->
-  <link rel="stylesheet" href="css/jquery.fileupload.css">
+  stylesheet_link_tag "gumby.css"
+  stylesheet_link_tag "style.css"
+  stylesheet_link_tag "component.css"
+  stylesheet_link_tag "jquery.fileupload.css"
 
-  
-  <script src="js/modernizr-2.6.2.min.js"></script>  <!-- Modernizr /-->
+  javascript_include_tag "modernizr-2.6.2.min.js" <!-- Modernizr /-->
+  <!--  <script src="js/modernizr-2.6.2.min.js"></script>  -->
 
     </script>
   <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
@@ -116,7 +116,7 @@ function handleFiles(files) {
 
   function errorHandler(evt) {
     if(evt.target.error.name == "NotReadableError") {
-        alert("Canno't read file !");
+        alert("Cannot read file !");
     }
   }
 </script>
@@ -257,7 +257,7 @@ function handleFiles(files) {
                            }
                            if (input <= 15 ||(input > 25 && input < 60)) { $("#hours").empty().append("You will spend ").append(input).append(" minutes").append(" writing cards."); }
                            if (input >= 4000) {
-                             $("#hours").empty().append("To write ").append(input/7).append(" cards ").append(" please email us").append("<a href=\"mailto:me@krishna.im?Subject=We%20need%20a%20bunch%20of%20cards%20\"> here!</a>")};
+                             $("#hours").empty().append("To write ").append(input/7).append(" cards ").append(" please email us").append("<a href=\"mailto:bestregards@gmail.com?Subject=We%20need%20a%20bunch%20of%20cards%20\"> here!</a>")};
 
                          }
                          else { $("#hours").empty().append("You see that field above? If you put a number (i.e., \"40\") I can tell you how much time you save with <b>Best Regards</b>"); }
@@ -276,7 +276,7 @@ function handleFiles(files) {
 
         <div class="twelve columns centered">
 
-                             <h3>Order</h3>
+            <h3>Order</h3>
 
             <div class="hi-icon-wrap hi-icon-effect-9 hi-icon-effect-9b">
 
@@ -314,6 +314,10 @@ function handleFiles(files) {
                     <br> Complete with Contacts
                     <br> Save File as .csv 
                     <br> Upload File
+
+                    <br><br><br>
+                    <input id="fileupload" type="file" name="files[]" onchange="handleFiles(this.files)" />
+
                     </p>            
 
                    </div>
@@ -327,12 +331,12 @@ function handleFiles(files) {
 
 
         <!-- CSS to style the file input field as button and adjust the Bootstrap progress bars -->
-
+<!-- 
         <span class="btn btn-success fileinput-button">
             <i class="glyphicon glyphicon-plus"></i>
-            <!-- The file input field used as target for the file upload widget -->
+            The file input field used as target for the file upload widget
             <input id="fileupload" type="file" name="files[]" onchange="handleFiles(this.files)" />
-        </span>
+        </span> -->
 
         <!-- Order Checkout Section -->
         <!-- 
@@ -346,6 +350,7 @@ function handleFiles(files) {
           </script>
           -->
 
+          <br>
         <%= form_tag charges_path do %>
             <article>
                 <label class="amount">
@@ -554,13 +559,13 @@ function handleFiles(files) {
   <!-- Grab Google CDN's jQuery, fall back to local if offline -->
   <script src="//ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
   <script>window.jQuery || document.write('<script src="js/jquery-1.9.1.min.js"><\/script>')</script>
-  <script src="js/main.js" type="text/javascript"></script> <!-- Main Javascript File -->
-  <script src="js/plugins.js" type="text/javascript"></script> <!--Plugins File -->
-  <script src="js/cbpScroller.js" type="text/javascript"></script> <!-- Scroll from left & right -->
-  <script src="js/classie.js" type="text/javascript"></script> <!-- Scroll from left & right -->
-  <script src="js/jquery.scrollto.js" type="text/javascript"></script> <!-- ScrollTo for Button -->
-  <script src="js/jquery.parallax-1.1.3.js" type="text/javascript"></script> <!-- Parallax -->
-  <script src="js/jquery.flexslider.js" type="text/javascript"></script> <!-- FlexSlider -->
+  javascript_include_tag "main.js"
+  javascript_include_tag "plugins.js"
+  javascript_include_tag "cbpScroller.js"
+  javascript_include_tag "classie.js"
+  javascript_include_tag "jquery.scrollto.js"
+  javascript_include_tag "jquery.parallax-1.1.3.js"
+  javascript_include_tag "jquery.flexslider.js"
 
   
   <!-- Change UA-XXXXX-X to be your site's ID -->

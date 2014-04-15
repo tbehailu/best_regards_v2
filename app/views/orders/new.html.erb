@@ -1,0 +1,153 @@
+<!-- BEGIN CONTAINER ############################################### -->
+
+
+<div id="container" class="container">
+  <div id="cbp-so-scroller" class="cbp-so-scroller"> <!-- HERE IS THE DIV FOR SCROLLING EFFECT -->
+
+
+<!-- SECTION THUMBS ############################################### -->
+
+
+<section align="center" class="cbp-so-section thumbs"> 
+	<div class="row">
+	   <div class="twelve columns centered">
+	      <h3>Estimated Time Savings</h3>
+	      <div class="hi-icon-wrap hi-icon-effect-9 hi-icon-effect-9b">
+	         How many cards do you have to write? <br>
+	         <input type="text" name="cards" id="cards"> cards
+	         <p id="hours"></p>
+<!-- 	         <br>
+	         <p id="actual">Spend only <b>15 minutes</b> with <b>Best Regards</b>!</p>
+         -->
+           <br><br>
+	         <p>
+	         <form action="" method="POST"  class="field">
+	            <script>
+	               $(document).ready(function() {
+	               	console.log("Ready for Input!");
+	               	$("#cards").keyup(function(){
+	                  	var cardcount = isPositiveInteger($("#cards").val()*7) ;
+	                  	function isPositiveInteger(input) {
+	                  		if(input) {
+	                       var out = +input;
+	                       if (input < 0) input = Math.abs(input);
+	                       if (input != ~~input) input = parseInt(input, 10);
+	                       if (input >= 60 && input < 4000) {
+	                         min = input % 60;
+	                         hour = Math.floor(input/60);
+	                         $("#hours").empty().append("Thats over ").append(hour).append(" hours ").append(min).append(" minutes").append(" writing cards!");
+	                       }
+	                       if (input > 15 && input/7 <= 25) {
+	                       var timesaved = (input) - 15;
+	                       var h = Math.floor(timesaved/60);
+	                       var m = timesaved%60;
+	                      	 if (h > 0 ) {
+		                      	 $("#hours").empty().append("You will save ").append(h).append(" hours ").append(m).append(" minutes using <b>Best Regards</b>")};
+		                     if (h <= 0){ $("#hours").empty().append("You will save ").append(m).append(" minutes").append(" using <b>Best Regards</b>");}
+	                       }
+	                       if (input <= 15 ||(input > 25 && input < 60)) { $("#hours").empty().append("You will spend ").append(input).append(" minutes").append(" writing cards."); }
+	                       if (input >= 4000) {
+	                         $("#hours").empty().append("To write ").append(input/7).append(" cards ").append(" please email us").append("<a href=\"mailto:me@krishna.im?Subject=We%20need%20a%20bunch%20of%20cards%20\"> here!</a>")};
+
+	                     }
+	                     else { $("#hours").empty().append("You see that field above? If you put a number (i.e., \"40\") I can tell you how much time you save with <b>Best Regards</b>"); }
+	                  	}
+	                 });
+	                   $("#cards").keydown(function(){ $("#hours").empty() });
+	               });
+	            </script>
+	         </form>
+	         </p>
+	      </div>
+	   </div>
+	</div>
+
+	<div class="row">
+		<div class="twelve columns centered">
+      <h3>Order</h3>
+			<div class="hi-icon-wrap hi-icon-effect-9 hi-icon-effect-9b">
+			<div class="field">
+
+        <%= form_for @order do |f| %>
+        <%= f.label :user_name, "Name" %>:
+        <%= f.text_field :user_name %><br />
+
+        <%= f.label :email %>:
+        <%= f.text_field :email %><br />
+
+        <%= f.label :data, "Style" %>:
+        <%= f.text_field :data_type %><br />
+
+        <%= f.label :data, "File" %>:
+        <%= f.text_field :data %><br />
+
+        <%= f.submit %>
+        <% end %>
+
+      <p class="lead">
+      <br> Download the CSV
+      <a href="https://www.dropbox.com/s/b7rxekciik4txmb/CSV_Template.xlsx"><u><FONT COLOR = "#C0C0C0">Template</u></FONT></a>
+      <br> Complete with Contacts
+      <br> Save File as .csv
+      <br> Upload File
+      </p>
+    </div>
+  </div>
+  </div>
+	</div>
+</section>
+</div>
+</div>
+
+<!--     <div class="row">
+
+        <div class="twelve columns centered">
+
+            <h3>Order</h3>
+
+            <div class="hi-icon-wrap hi-icon-effect-9 hi-icon-effect-9b">
+
+            <div class="field">
+            <ul class="field">
+                <div class="picker">
+                    <select>
+                        <option value="#" disabled>Confirm Your Card Style</option>
+                        <option>Simple</option>
+                        <option>Classic</option>
+                        <option>Elegant</option>
+                     </select>
+                 </div>
+            </ul>
+                <form action="" method="POST"  class="field">
+                    <p><input class="input" type="text" name="fname" id="fname" placeholder="First Name" /></p>
+                    <p><input class="input" type="text" name="lname" id="lname" placeholder="Last Name" /></p>
+                    <p><input class="input" type="text" name="email" id="email" placeholder="Email" /></p>
+                    <p><input class="input" type="text" name="addr" id="addr" placeholder="Address" /></p>
+                    <p><input class="input" type="text" name="addr2" id="addr2" placeholder="Address Line 2" /></p>
+                    <p><input class="input" type="text" name="city" id="city" placeholder="City" /></p>
+                    <p><input class="input" type="text" name="state" id="state" placeholder="State" /></p>
+                    <p><input class="input" type="text" name="zip" id="zip" placeholder="Zip" /></p>
+                    <br>
+                    <button type="button" id="next">Save</button>
+                    <p id="confirm"></p>
+
+                <p>
+
+                </p>
+                </div>
+
+                    <p class="lead">
+                    <br> Download the CSV <a href="https://www.dropbox.com/s/b7rxekciik4txmb/CSV_Template.xlsx"><u><FONT COLOR = "#C0C0C0">Template</u></FONT></a>
+                    <br> Complete with Contacts
+                    <br> Save File as .csv
+                    <br> Upload File
+
+                    <br><br><br>
+                    <input id="fileupload" type="file" name="files[]" onchange="handleFiles(this.files)" />
+
+                    </p>
+
+                   </div>
+
+
+            </div> -->
